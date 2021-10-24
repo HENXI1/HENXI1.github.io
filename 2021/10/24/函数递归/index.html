@@ -465,7 +465,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><code>   #include&lt;stdio.h&gt;     void print(int n)     &#123;     if (n&gt;9)&#123;     print(n/10)&#125;     printf(&quot;%d&quot;,n%10);     &#125;     int main()     &#123;     unsigned int num=0;     scanf(&quot;%d&quot;,&amp;num);     print(num);     return 0;     &#125;</code><br>例：输入123；<br>进入递归后先执行if中语句：<br>1.第一次123/10=12大于9继而重新进入if循环进行12/10=1；继续进行打印”1%10=1”；<br>2.打印1后上一次结果12再次执行打印”12%10=2”；<br>3.最后123进行打印”123%10=3”.</p>
+                <p><code>   #include&lt;stdio.h&gt;     void print(int n)       &#123;       if (n&gt;9)&#123;       print(n/10)&#125;       printf(&quot;%d&quot;,n%10);       &#125;       int main()       &#123;       unsigned int num=0;       scanf(&quot;%d&quot;,&amp;num);       print(num);       return 0;       &#125;  </code><br>例：输入123；<br>进入递归后先执行if中语句：<br>1.第一次123/10=12大于9继而重新进入if循环进行12/10=1；继续进行打印”1%10=1”；<br>2.打印1后上一次结果12再次执行打印”12%10=2”；<br>3.最后123进行打印”123%10=3”.</p>
 
                 
             </div>
