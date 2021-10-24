@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-10-24T02:20:47.432Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>常用功能</title>
+    <link href="http://example.com/2021/10/09/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/"/>
+    <id>http://example.com/2021/10/09/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/</id>
+    <published>2021-10-08T16:00:00.000Z</published>
+    <updated>2021-10-24T02:20:47.432Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li><u>星空</u></li><li><img src="http://img.desktx.com/d/file/wallpaper/space/20180521/875ed812c5522ee550e05fe49ee43783.jpg" alt="星空图片"></li><li><a href="https://www.bilibili.com/"><em>知识源泉</em></a></li><li><code>printf()</code>函数</li><li><pre><code class="javascript">$(document).ready(function () &#123;  alert(&#39;RUNOOB&#39;);&#125;);</code></pre></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;u&gt;星空&lt;/u&gt;&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;http://img.desktx.com/d/file/wallpaper/space/20180521/875ed812c5522ee550e05fe49ee43783.jpg&quot; alt=&quot;星空图片&quot;</summary>
+      
+    
+    
+    
+    
+    <category term="无借鉴意义" scheme="http://example.com/tags/%E6%97%A0%E5%80%9F%E9%89%B4%E6%84%8F%E4%B9%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C语言新手代码</title>
+    <link href="http://example.com/2021/09/26/C%E8%AF%AD%E8%A8%80%E6%96%B0%E6%89%8B%E4%BB%A3%E7%A0%81/"/>
+    <id>http://example.com/2021/09/26/C%E8%AF%AD%E8%A8%80%E6%96%B0%E6%89%8B%E4%BB%A3%E7%A0%81/</id>
+    <published>2021-09-25T16:00:00.000Z</published>
+    <updated>2021-09-26T07:42:02.934Z</updated>
+    
+    <content type="html"><![CDATA[<p>#include &lt;stdio.h&gt;<br>int main()<br>{<br>     int n=1;           //输入n=1；m=2<br>     int m=2;<br>     switch(n)         //从n开始进行命令<br>{<br>     case1:    m++; //n=1，所以从case1开始进行m-&gt;3<br>     case2:    n++;  //case1后无break，所以case2继续进行n-&gt;2<br>     case3:<br>     switch(n)          //case3从n开始进行<br>{<br>     case1:    n++;   //n=2，所以case1不执行<br>     case2:    m++;n++;   //n=2case2执行，m-&gt;4,n-&gt;3<br>     break;               //break,出现代码块内结束<br>}<br>     case4:   m++;   //主函数内无break,所以case4进行<br>     break;<br>     default:             //default为默认<br>      break;<br>}<br>     printf(“m=%d,n=%d\n”,m,n);  //最后输出m，n的值<br>     return 0;<br>}</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;#include &amp;lt;stdio.h&amp;gt;&lt;br&gt;int main()&lt;br&gt;{&lt;br&gt;     int n=1;           //输入n=1；m=2&lt;br&gt;     int m=2;&lt;br&gt;     switch(n)         //从n开始进行命令&lt;</summary>
+      
+    
+    
+    
+    
+    <category term="小白刚开始学习很多地方不懂，请多多指教" scheme="http://example.com/tags/%E5%B0%8F%E7%99%BD%E5%88%9A%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0%E5%BE%88%E5%A4%9A%E5%9C%B0%E6%96%B9%E4%B8%8D%E6%87%82%EF%BC%8C%E8%AF%B7%E5%A4%9A%E5%A4%9A%E6%8C%87%E6%95%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://example.com/2021/09/18/hello-world/"/>
+    <id>http://example.com/2021/09/18/hello-world/</id>
+    <published>2021-09-18T12:40:04.548Z</published>
+    <updated>2021-09-18T12:40:04.548Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>利用C++猜数字</title>
+    <link href="http://example.com/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/"/>
+    <id>http://example.com/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-10-09T05:25:13.643Z</updated>
+    
+    <content type="html"><![CDATA[<p>#include&lt;stdio.h&gt;<br>#include&lt;time.h&gt;<br>#include&lt;stdlib.h&gt;<br>void menu() //输入菜单<br>{<br>    printf(“*********************\n”);<br>    printf(“<em><strong>1.play   2.sxit</strong></em>\n”);<br>    printf(“*********************\n”);<br>    }<br>void game()  //输入游戏进程<br>{<br>    int guess=0;<br>    int ret=0;<br>    ret=rand%100+1;  //创建一个1~100的随机数<br>    while(1)  //利用while循环来进行猜数字环节<br>{<br>    printf(“请猜数字：&gt;”);<br>    scanf(“%d”,&amp;guess);<br>    if(guess&gt;get)<br>    {<br>    printf(“猜大了\n”);<br>    }<br>    else if(guess&lt;ret)<br>    {<br>    printf(“ 猜小了\n”);<br>    }<br>    else<br>{<br>    printf(“恭喜你猜对了！！！ \n”);<br>    break;<br>}<br>int main()<br>{<br>    int input=0;<br>    srand ((unsigned int)time(NULL));  //利用时间戳来制造随机数使数字达到真正的随机取值<br>    do  //do  while循环使得程序完成一次后可以继续使用<br>    {menu();<br>    printf(“请选择:&gt;”);<br>    scanf(“%d”,&amp;input);<br>    switch(input)<br>{<br>    case 1:<br>    game();<br>    break;<br>    case 2:<br>    printf(“退出游戏\n”);<br>    break;<br>    default<br>    printf(“选择错误\n”);<br>    break;<br>}<br>}    while(input);<br>    return 0;<br>}    </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;#include&amp;lt;stdio.h&amp;gt;&lt;br&gt;#include&amp;lt;time.h&amp;gt;&lt;br&gt;#include&amp;lt;stdlib.h&amp;gt;&lt;br&gt;void menu() //输入菜单&lt;br&gt;{&lt;br&gt;    printf(“*****************</summary>
+      
+    
+    
+    
+    
+    <category term="学习进度出奇的慢" scheme="http://example.com/tags/%E5%AD%A6%E4%B9%A0%E8%BF%9B%E5%BA%A6%E5%87%BA%E5%A5%87%E7%9A%84%E6%85%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>My New Post</title>
+    <link href="http://example.com/1970/01/01/My-New-Post/"/>
+    <id>http://example.com/1970/01/01/My-New-Post/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-10-09T01:50:45.158Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+</feed>
