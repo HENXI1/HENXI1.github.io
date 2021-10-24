@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-24T03:35:48.977Z</updated>
+  <updated>2021-10-24T03:37:42.985Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="http://example.com/2021/10/24/%E5%87%BD%E6%95%B0%E9%80%92%E5%BD%92/"/>
     <id>http://example.com/2021/10/24/%E5%87%BD%E6%95%B0%E9%80%92%E5%BD%92/</id>
     <published>2021-10-23T16:00:00.000Z</published>
-    <updated>2021-10-24T03:35:48.977Z</updated>
+    <updated>2021-10-24T03:37:42.985Z</updated>
     
-    <content type="html"><![CDATA[<p><code>   #include&lt;stdio.h&gt;     void print(int n)       &#123;       if (n&gt;9)&#123;       print(n/10)&#125;       printf(&quot;%d&quot;,n%10);       &#125;       int main()       &#123;       unsigned int num=0;       scanf(&quot;%d&quot;,&amp;num);       print(num);       return 0;       &#125;  </code><br>例：输入123；<br>进入递归后先执行if中语句：<br>1.第一次123/10=12大于9继而重新进入if循环进行12/10=1；继续进行打印”1%10=1”；<br>2.打印1后上一次结果12再次执行打印”12%10=2”；<br>3.最后123进行打印”123%10=3”.</p>]]></content>
+    <content type="html"><![CDATA[<p>#include&lt;stdio.h&gt;<br>    void print(int n)<br>{<br>    if (n&gt;9){<br>    print(n/10)<br>}<br>    printf(“%d”,n%10);<br>}<br>    int main()<br>{<br>    unsigned int num=0;<br>    scanf(“%d”,&amp;num);<br>    print(num);<br>    return 0;<br>}  </p><p>例：输入123；<br>进入递归后先执行if中语句：<br>1.第一次123/10=12大于9继而重新进入if循环进行12/10=1；继续进行打印”1%10=1”；<br>2.打印1后上一次结果12再次执行打印”12%10=2”；<br>3.最后123进行打印”123%10=3”.</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;&lt;code&gt;   #include&amp;lt;stdio.h&amp;gt;     void print(int n)       &amp;#123;       if (n&amp;gt;9)&amp;#123;       print(n/10)&amp;#125;       printf(&amp;quot;%d</summary>
+    <summary type="html">&lt;p&gt;#include&amp;lt;stdio.h&amp;gt;&lt;br&gt;    void print(int n)&lt;br&gt;{&lt;br&gt;    if (n&amp;gt;9){&lt;br&gt;    print(n/10)&lt;br&gt;}&lt;br&gt;    printf(“%d”,n%10);&lt;br&gt;}&lt;br&gt;    i</summary>
       
     
     
