@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-05T03:08:54.448Z</updated>
+  <updated>2021-11-06T03:34:28.365Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>利用phpstudy里的MySQL并通过命令行</title>
+    <link href="http://example.com/2021/11/06/%E5%88%A9%E7%94%A8phpstudy%E8%BF%9B%E8%A1%8Cmysql/"/>
+    <id>http://example.com/2021/11/06/%E5%88%A9%E7%94%A8phpstudy%E8%BF%9B%E8%A1%8Cmysql/</id>
+    <published>2021-11-05T16:00:00.000Z</published>
+    <updated>2021-11-06T03:34:28.365Z</updated>
+    
+    <content type="html"><![CDATA[<p>打开phpstudy<br><img src="https://i.loli.net/2021/11/06/P2cLuyxH5dnY1ls.png" alt="图片1.png"><br>打开文件位置后将下列地址在环境变量中添加到系统变量Path中<br><img src="https://i.loli.net/2021/11/06/QFHrj19Dh4sxPBM.png" alt="图片12.png"><br>此时打开cmd检验依旧会拒绝访问<br><img src="https://i.loli.net/2021/11/06/TgVFG8tRfouJrUz.png" alt="图片2.png"><br>进入phpstudy中修改root密码<br><img src="https://i.loli.net/2021/11/06/8uEXtQLHPbzy79m.png" alt="图片3.png"><br>然后在cmd下输入 mysql -uroot -p，回车，提示输入密码，输入刚刚设置的密码，成功进入<br><img src="https://i.loli.net/2021/11/06/GyLYs1W7FNXlT5I.png" alt="图片4.png"><br>此时输入show databases就能显示mysql中的表<br><img src="https://i.loli.net/2021/11/06/VksnATLF9rClouZ.png" alt="图5"><br>使用security的表，并展示表格<br><img src="https://i.loli.net/2021/11/06/TLrZ2FgG6VQk5oa.png" alt="图6"><br>再次输入select * from users<br><img src="!%5B%E5%9B%BE%E7%89%877.png%5D(https://i.loli.net/2021/11/06/Km3x56TnfjSeJPE.png" alt="图7"><br>Mysql简单用法：<br>查库：select schema_name from information_schema.schemata,查找所有的库<br><img src="https://i.loli.net/2021/11/06/vUpYBIsTuAF5lGX.png" alt="图8"><br>查表:select table_name from information_schema.tables where table_schema=’security’<br><img src="https://i.loli.net/2021/11/06/veLp57ESxVbhkMz.png" alt="9"><br>查列：select column_name from information_schema.columns where table_name=’users’<br><img src="https://i.loli.net/2021/11/06/eXdzCniPZDK76Vk.png" alt="10"><br>查字段：select username,password from security.users<br><img src="https://i.loli.net/2021/11/06/BWIFV8bTyurRaJX.png" alt="11"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;打开phpstudy&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/06/P2cLuyxH5dnY1ls.png&quot; alt=&quot;图片1.png&quot;&gt;&lt;br&gt;打开文件位置后将下列地址在环境变量中添加到系统变量Path中&lt;br&gt;&lt;img src=&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>C语言实现三子棋</title>
