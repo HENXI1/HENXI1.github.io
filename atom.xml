@@ -169,19 +169,6 @@ f</summary>
   </entry>
   
   <entry>
-    <title>My New Post</title>
-    <link href="http://example.com/1970/01/01/My-New-Post/"/>
-    <id>http://example.com/1970/01/01/My-New-Post/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-10-09T01:50:45.158Z</updated>
-    
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>less 8</title>
     <link href="http://example.com/1970/01/01/less8/"/>
     <id>http://example.com/1970/01/01/less8/</id>
@@ -222,24 +209,15 @@ f</summary>
   </entry>
   
   <entry>
-    <title>利用C++猜数字</title>
-    <link href="http://example.com/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/"/>
-    <id>http://example.com/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/</id>
+    <title>My New Post</title>
+    <link href="http://example.com/1970/01/01/My-New-Post/"/>
+    <id>http://example.com/1970/01/01/My-New-Post/</id>
     <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-10-09T05:25:13.643Z</updated>
-    
-    <content type="html"><![CDATA[<p>#include&lt;stdio.h&gt;<br>#include&lt;time.h&gt;<br>#include&lt;stdlib.h&gt;<br>void menu() //输入菜单<br>{<br>    printf(“*********************\n”);<br>    printf(“<em><strong>1.play   2.sxit</strong></em>\n”);<br>    printf(“*********************\n”);<br>    }<br>void game()  //输入游戏进程<br>{<br>    int guess=0;<br>    int ret=0;<br>    ret=rand%100+1;  //创建一个1~100的随机数<br>    while(1)  //利用while循环来进行猜数字环节<br>{<br>    printf(“请猜数字：&gt;”);<br>    scanf(“%d”,&amp;guess);<br>    if(guess&gt;get)<br>    {<br>    printf(“猜大了\n”);<br>    }<br>    else if(guess&lt;ret)<br>    {<br>    printf(“ 猜小了\n”);<br>    }<br>    else<br>{<br>    printf(“恭喜你猜对了！！！ \n”);<br>    break;<br>}<br>int main()<br>{<br>    int input=0;<br>    srand ((unsigned int)time(NULL));  //利用时间戳来制造随机数使数字达到真正的随机取值<br>    do  //do  while循环使得程序完成一次后可以继续使用<br>    {menu();<br>    printf(“请选择:&gt;”);<br>    scanf(“%d”,&amp;input);<br>    switch(input)<br>{<br>    case 1:<br>    game();<br>    break;<br>    case 2:<br>    printf(“退出游戏\n”);<br>    break;<br>    default<br>    printf(“选择错误\n”);<br>    break;<br>}<br>}    while(input);<br>    return 0;<br>}    </p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;#include&amp;lt;stdio.h&amp;gt;&lt;br&gt;#include&amp;lt;time.h&amp;gt;&lt;br&gt;#include&amp;lt;stdlib.h&amp;gt;&lt;br&gt;void menu() //输入菜单&lt;br&gt;{&lt;br&gt;    printf(“*****************</summary>
-      
+    <updated>2021-10-09T01:50:45.158Z</updated>
     
     
     
     
-    <category term="学习进度出奇的慢" scheme="http://example.com/tags/%E5%AD%A6%E4%B9%A0%E8%BF%9B%E5%BA%A6%E5%87%BA%E5%A5%87%E7%9A%84%E6%85%A2/"/>
     
   </entry>
   
@@ -260,6 +238,28 @@ f</summary>
     
     
     
+    
+  </entry>
+  
+  <entry>
+    <title>利用C++猜数字</title>
+    <link href="http://example.com/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/"/>
+    <id>http://example.com/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-10-09T05:25:13.643Z</updated>
+    
+    <content type="html"><![CDATA[<p>#include&lt;stdio.h&gt;<br>#include&lt;time.h&gt;<br>#include&lt;stdlib.h&gt;<br>void menu() //输入菜单<br>{<br>    printf(“*********************\n”);<br>    printf(“<em><strong>1.play   2.sxit</strong></em>\n”);<br>    printf(“*********************\n”);<br>    }<br>void game()  //输入游戏进程<br>{<br>    int guess=0;<br>    int ret=0;<br>    ret=rand%100+1;  //创建一个1~100的随机数<br>    while(1)  //利用while循环来进行猜数字环节<br>{<br>    printf(“请猜数字：&gt;”);<br>    scanf(“%d”,&amp;guess);<br>    if(guess&gt;get)<br>    {<br>    printf(“猜大了\n”);<br>    }<br>    else if(guess&lt;ret)<br>    {<br>    printf(“ 猜小了\n”);<br>    }<br>    else<br>{<br>    printf(“恭喜你猜对了！！！ \n”);<br>    break;<br>}<br>int main()<br>{<br>    int input=0;<br>    srand ((unsigned int)time(NULL));  //利用时间戳来制造随机数使数字达到真正的随机取值<br>    do  //do  while循环使得程序完成一次后可以继续使用<br>    {menu();<br>    printf(“请选择:&gt;”);<br>    scanf(“%d”,&amp;input);<br>    switch(input)<br>{<br>    case 1:<br>    game();<br>    break;<br>    case 2:<br>    printf(“退出游戏\n”);<br>    break;<br>    default<br>    printf(“选择错误\n”);<br>    break;<br>}<br>}    while(input);<br>    return 0;<br>}    </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;#include&amp;lt;stdio.h&amp;gt;&lt;br&gt;#include&amp;lt;time.h&amp;gt;&lt;br&gt;#include&amp;lt;stdlib.h&amp;gt;&lt;br&gt;void menu() //输入菜单&lt;br&gt;{&lt;br&gt;    printf(“*****************</summary>
+      
+    
+    
+    
+    
+    <category term="学习进度出奇的慢" scheme="http://example.com/tags/%E5%AD%A6%E4%B9%A0%E8%BF%9B%E5%BA%A6%E5%87%BA%E5%A5%87%E7%9A%84%E6%85%A2/"/>
     
   </entry>
   
